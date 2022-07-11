@@ -1,0 +1,18 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Ignite-SOLID Documentation",
+        "description": "This is an API for Ignite-SOLID project",
+        "version": "1.0.0",
+        "contact": {
+            "email": "pabloxt14@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {},
+            "get": {},
+            "path": {}
+        }
+    }
+}
