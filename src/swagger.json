@@ -1,19 +1,25 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Ignite-SOLID Documentation",
-        "description": "This is an API for Ignite-SOLID project",
-        "version": "1.0.0",
+        "title": "API Ignite-SOLID de criação de usuários",
+        "description": "Essa API tem como objetivo o gerenciamento de usuários de um banco em memória",
         "contact": {
             "email": "pabloxt14@gmail.com"
-        }
+        },
+        "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost:3333",
+            "description": "API de teste"
+        }
+    ],
     "paths": {
         "/users": {
             "post": {
                 "tags": ["Users"],
-                "summary": "Create a new user",
-                "description": "Create a new user",
+                "summary": "Cadastro de usuário",
+                "description": "Essa rota será responsável por cadastrar um novo produto",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -81,9 +87,67 @@
             },
             "get": {
                 "tags": ["Users"]
-            },
-            "path": {
-                "tags": ["Users"]
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "Tornar usuário em admin",
+                "description": "Essa rota será responsável por tornar o usuário em admin",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "ID do usuário para tornar em admin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User does not exist!"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "admin": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date"
+                    }
+                }
             }
         }
     }
