@@ -25,7 +25,7 @@
             "post": {
                 "tags": ["users"],
                 "summary": "Cadastro de usuário",
-                "description": "Essa rota será responsável por cadastrar um novo produto",
+                "description": "Essa rota será responsável por cadastrar um novo usuário",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -54,15 +54,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/User",
-                                    "example": {                                       
-                                        "admin": false,
-                                        "id": "cc5359f3-35fa-4c51-b02b-88a2df2ef0aa",
-                                        "name": "John Doe",
-                                        "email": "johndoe@gmail.com",
-                                        "created_at": "2022-07-12T21:20:11.060Z",
-                                        "updated_at": "2022-07-12T21:20:11.060Z"                                     
-                                    }
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -141,7 +133,54 @@
                                         }
                                     },
                                     "example": {
-                                        "error": "User id informed does not exist!"
+                                        "error": "You need to be an administrator to list all users."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": ["users"],
+                "summary": "Retorna um usuário específico",
+                "description": "Essa rota é responsável por retornar um usuário específico por id.",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "User not found!"
                                     }
                                 }
                             }
@@ -171,13 +210,28 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "$ref": "#/components/schemas/User"
+                                    "$ref": "#/components/schemas/UserAdmin"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "User does not exist!"
+                        "description": "Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "User not found!"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -208,6 +262,47 @@
                         "type": "string",
                         "format": "date-time"
                     }
+                },
+                "example": {                                                        
+                    "admin": false,
+                    "id": "cc5359f3-35fa-4c51-b02b-88a2df2ef0aa",
+                    "name": "John Doe",
+                    "email": "johndoe@gmail.com",
+                    "created_at": "2022-07-12T21:20:11.060Z",
+                    "updated_at": "2022-07-12T21:20:11.060Z"                                             
+                }
+            },
+            "UserAdmin": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "admin": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "example": {                                                        
+                    "admin": true,
+                    "id": "cc5359f3-35fa-4c51-b02b-88a2df2ef0aa",
+                    "name": "John Doe",
+                    "email": "johndoe@gmail.com",
+                    "created_at": "2022-07-12T21:20:11.060Z",
+                    "updated_at": "2022-07-12T21:20:11.060Z"                                             
                 }
             }
         }
