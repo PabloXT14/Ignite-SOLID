@@ -27,6 +27,8 @@
                 "summary": "Cadastro de usuário",
                 "description": "Essa rota será responsável por cadastrar um novo usuário",
                 "requestBody": {
+                    "description": "Campos obrigatórios para a criação de um usuário",
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -49,7 +51,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Success",
+                        "description": "Operação realizada com sucesso.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -60,7 +62,7 @@
                         }
                     },
                     "400": {
-                        "description": "Error",
+                        "description": "Email já está sendo utilizado.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -82,23 +84,27 @@
             "get": {
                 "tags": ["users"],
                 "summary": "Retorna todos os usuários",
-                "description": "Somente usuário admin pode acessar.",
+                "description": "Somente usuário `admin` pode acessar.",
                 "parameters": [
                     {
                         "name": "user_id",
                         "in": "header",
-                        "description": "ID do usuário admin",
+                        "description": "ID do usuário `admin`",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Operação realizada com sucesso.",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    },
                                     "example": [
                                         {
                                             "admin": false,
@@ -122,7 +128,7 @@
                         }
                     },
                     "400": {
-                        "description": "Error",
+                        "description": "Usuário sem permissão ou Usuário não encontrado.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -146,19 +152,20 @@
             "get": {
                 "tags": ["users"],
                 "summary": "Retorna um usuário específico",
-                "description": "Essa rota é responsável por retornar um usuário específico por id.",
+                "description": "Essa rota é responsável por retornar um usuário específico por `id`.",
                 "parameters": [
                     {
                         "name": "user_id",
                         "in": "path",
                         "description": "ID do usuário",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Operação realizada com sucesso.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -169,7 +176,7 @@
                         }
                     },
                     "404": {
-                        "description": "Error",
+                        "description": "Usuário não encontrado.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -193,19 +200,20 @@
             "patch": {
                 "tags": ["users"],
                 "summary": "Tornar usuário em admin",
-                "description": "Essa rota será responsável por tornar o usuário em admin",
+                "description": "Essa rota será responsável por tornar o usuário em `admin`",
                 "parameters": [
                     {
                         "name": "user_id",
                         "in": "path",
                         "description": "ID do usuário para tornar em admin",
                         "required": true,
-                        "type": "string"
+                        "type": "string",
+                        "format": "uuid"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Operação realizada com sucesso.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -216,7 +224,7 @@
                         }
                     },
                     "404": {
-                        "description": "Error",
+                        "description": "Usuário não encontrado.",
                         "content": {
                             "application/json": {
                                 "schema": {
